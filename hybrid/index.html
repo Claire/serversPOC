@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Hybrid Site</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="/js.cookie.js"></script>
+    <style>
+        body { padding-top:50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Hybrid !</h1>
+    </div>
+    <div>
+        <h2><a href="http://test.legacy.quickbase.com.dev/">link to current stack</a></h2>
+        <h2><a href="/cattle">link to this stack /cattle</a></h2>
+        <h2><a href="http://test.legacy.quickbase.com.dev/pets">link to this other stack http://test.legacy.quickbase.com.dev/pets</a></h2>
+        <h2> Get Data from legacy: </h2> <button id="getLegacy">Fetch Legacy data</button>
+        <div id="outputPet">
+        </div>
+        <h2> Get Data from hybrid: </h2> <button id="getHybrid">Fetch Hybrid data</button>
+        <div id="outputCattle">
+        </div>
+        <h2>Current cookies:</h2>
+        <div id="cookieContent">
+        </div>
+        <p>
+            <button id="clearCookies">clear cookies</button>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function createNode(element) {
+            return document.createElement(element); // Create the type of element you pass in the parameters
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el); // Append the second parameter(element) to the first one
+        }
+
+        function wrapInPara(text) {
+            return '<p>' + text + '</p>';
+        }
+
+        function appendChild(idSelector, text) {
+            var myDiv = document.getElementById(idSelector);
+            if (myDiv) {
+                var myContent = document.createElement("p");
+                myContent.appendChild(document.createTextNode(text));
+                myDiv.appendChild(myContent);
+            }
+        }
+        function replaceContent(idSelector, text) {
+            var myDiv = document.getElementById(idSelector);
+            if (myDiv) {
+                myDiv.innerHTML = text;
+            }
+        }
+
+        function currentCookies() {
+            var cookieslist = document.cookie.split('; ');
+            var cookiesFormatted = "";
+            cookieslist.forEach(function (item) {
+                if (item && item.length) {
+                    cookiesFormatted += wrapInPara(item);
+                }
+            })
+            replaceContent("cookieContent", cookiesFormatted);
+            console.log('current cookies = ' + JSON.stringify(Cookies.get()));
+        }
+
+        function clearCookies() {
+            var cookieslist = document.cookie.split('; ');
+            cookieslist.forEach(function (item) {
+                if (item && item.length) {
+                    key = item.split('=')[0];
+                    Cookies.remove(key);
+                    //document.cookie = key + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+                }
+            });
+            currentCookies();
+        }
+
+        function clickHandler(urlToFetch, responseCallback) {
+            //get json from legacy qb
+            //this fetch will do a options prefetch test first since its setting allow-origin
+            var request = new Request(urlToFetch, {
+                method: 'GET',
+                mode: 'cors',
+                redirect: 'follow',
+                credentials: 'include',
+                headers: new Headers({
+                    'Content-Type': 'text/json',
+                    'Access-Control-Allow-Origin': true
+                })
+            });
+            fetch(request)
+                .then((data) => {
+                    return data.json();
+                })
+                .then((json) => {
+                    // Here you get the data to modify as you please
+                    responseCallback(json);
+                })
+                .catch((error) => {
+                    // If there is any error you will catch them here
+                    console.log("error getting request.url: " + request.url);
+                });
+        };
+        var clickHandlerPets = function () {
+            clickHandler('http://test.legacy.quickbase.com.dev/pets', function (json) {
+                // Here you get the data to modify as you please
+                var petslist = json;
+                var msg = 'petslist:'+JSON.stringify(petslist);
+                console.log(msg);
+                appendChild('outputPet',msg);
+                currentCookies();
+            });
+        };
+        var clickHandlerCattle = function () {
+            clickHandler('http://test.hybrid.quickbase.com.dev/cattle', function (json) {
+                // Here you get the data to modify as you please
+                var cattlelist = json;
+                var msg = 'cattlelist:'+JSON.stringify(cattlelist);
+                console.log(msg);
+                appendChild('outputCattle',msg);
+                currentCookies();
+            });
+        };
+
+        currentCookies();
+        document.getElementById("getHybrid").onclick = clickHandlerCattle;
+        document.getElementById("getLegacy").onclick = clickHandlerPets;
+        document.getElementById("clearCookies").onclick = clearCookies;
+    });
+</script>
+</body>
+</html>
