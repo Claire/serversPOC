@@ -32,3 +32,4 @@ this is needed only once there in hotel until they are removed with `npm run rem
 ---
 go to hotel.dev and start and stop the servers
 
+Works on Chrome and Firefox
