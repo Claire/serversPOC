@@ -1,7 +1,7 @@
-##Setup Hotel 
+## Setup Hotel 
 https://www.npmjs.com/package/hotel
 
-##Set up proxy for browser/system
+## Set up proxy for browser/system
 using 
 `http://localhost:2000/proxy.pac`
 
