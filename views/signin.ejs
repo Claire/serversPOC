@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Legacy Quickbase Site</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="/js.cookie.js"></script>
+    <style>
+        body { padding-top:50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>Welcome to Quickbase
+            signin!</h2>
+        <label>User Name:<input class="form-control" placeholder="nothing here is ok..." type="text"></label>
+        <label>Password: <input class="form-control" placeholder="nothing here is ok..." type="text"></label>
+        <button id="signin" class="btn btn-success">Just Signin</button>
+    </div>
+    <p id="currentUrl"></p>
+</div>
+
+<script src="/js.cookie.js"></script>
+<script src="/pocHandlers.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function getCreds() {
+            window.location.href = '/sendcreds?goto=<%=targetUrl%>';
+        }
+        document.getElementById("signin").onclick = getCreds;
+    })
+</script>
+</body>
+</html>

@@ -4,14 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hotlist": "./node_modules/.bin/hotel ls",
+    "hotLegacyChrome": "./node_modules/.bin/hotel add 'node  --inspect=9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
+    "hotLegacyND": "./node_modules/.bin/hotel add 'node-debug -p 9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
+    "hotLegacy": "./node_modules/.bin/hotel add 'node --debug=9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
+    "removeLegacy": "./node_modules/.bin/hotel rm --name testRealm.legacy.quickbase.com ",
+
+    "hotHybridChrome": "./node_modules/.bin/hotel add 'node  --inspect=9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
+    "hotHybridND": "./node_modules/.bin/hotel add 'node-debug -p 9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
+    "hotHybrid": "./node_modules/.bin/hotel add 'node --debug=9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
+    "removeHybrid": "./node_modules/.bin/hotel rm  --name testRealm.hybrid.quickbase.com ",
+
+    "removeall": "npm run removeLegacy & npm run removeHybrid",
+    "addall": "npm run hotLegacy & npm run hotHybrid"
   },
   "author": "Claire Martinez",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
     "express": "^4.15.4",
+    "hotel": "^0.7.6",
     "method-override": "^2.3.9",
     "morgan": "^1.8.2",
     "path": "^0.12.7"
