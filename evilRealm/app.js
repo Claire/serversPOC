@@ -2,9 +2,9 @@ const server = require('../appCommon');
 const path = require('path');
 
 const allowedFrom = 'quickbase.com.dev';
-const thisRealm = 'testrealm';
+const thisRealm = 'evilrealm';
 const signinurl = 'http://testrealm.quickbase.com.dev/signin';
-const thishost = 'http://testrealm.hybrid.quickbase.com.dev/signin';
+const thishost = 'http://evilrealm.quickbase.com.dev';
 
 server.app.set('port', process.env.PORT || 3001);
 
@@ -47,11 +47,11 @@ server.app.use(function(req, res, next) {
     next();
 });
 
-server.app.get('/cattle', function(req, res) {
+server.app.get('/badrealm', function(req, res) {
     const data = {
-        "Cattle": [
-            "Bessie",
-            "Clarabelle"]
+        "Badrealm": [
+            "Evil",
+            "Mal"]
     };
     res.json(data);
 });

@@ -55,13 +55,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function clickHandler(urlToFetch, responseCallback) {
-        //get json from legacy qb
-        //this fetch will do a options prefetch test first since its setting allow-origin
+        //get json from current qb
+        //this get will do a options prefetch test first since its setting allow-origin
         var requestConfig =  {
             url : urlToFetch,
             method: 'get',
-            //mode: 'cors',
-            //redirect: 'follow',
             responseType: 'json',
             withCredentials: true,
             headers: {
@@ -86,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     function clickHandlerPets() {
-        clickHandler('http://testRealm.legacy.quickbase.com.dev/pets', function (json) {
+        clickHandler('http://testRealm.quickbase.com.dev/pets', function (json) {
             // Here you get the data to modify as you please
             var petslist = json;
             var msg = 'petslist:' + JSON.stringify(petslist);
@@ -107,9 +105,39 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function clickHandlerEvil() {
+        clickHandler('http://www.evil.dev/bad', function (json) {
+            // Here you get the data to modify as you please
+            var badlist = json;
+            var msg = 'badlist:' + JSON.stringify(badlist);
+            console.log(msg);
+            appendChild('outputBad', msg);
+            currentCookies();
+        });
+    }
+
+    function clickHandlerEvilRealm() {
+        clickHandler('http://evilrealm.quickbase.com.dev/badrealm', function (json) {
+            // Here you get the data to modify as you please
+            var badlist = json;
+            var msg = 'badlist:' + JSON.stringify(badlist);
+            console.log(msg);
+            appendChild('outputBad', msg);
+            currentCookies();
+        });
+    }
+
+    function addHandler(id, functionName) {
+        var elt = document.getElementById(id);
+        if (elt){
+            elt.onclick = functionName;
+        }
+    }
     currentURL();
     currentCookies();
-    document.getElementById("getHybrid").onclick = clickHandlerCattle;
-    document.getElementById("getLegacy").onclick = clickHandlerPets;
-    document.getElementById("clearCookies").onclick = clearCookies;
+    addHandler("getHybrid", clickHandlerCattle);
+    addHandler("getCurrent", clickHandlerPets);
+    addHandler("getEvil", clickHandlerEvil);
+    addHandler("getEvilRealm", clickHandlerEvilRealm);
+    addHandler("clearCookies", clearCookies);
 });

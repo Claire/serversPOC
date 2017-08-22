@@ -4,13 +4,17 @@ const server = require('../appCommon');
 const path = require('path');
 const strify = require('json-stringify-safe');
 
-
+/** Current stack server simulation */
 
 const baseDomain = 'quickbase.com.dev';
+const defaultRealm = 'www';
+const thisRealm = 'testrealm';
+const realmDomain = 'testrealm.quickbase.com.dev';
+const evilDomain = 'evil.quickbase.com.dev';
+const realmHybridDomain = 'testrealm.hybrid.quickbase.com.dev';
 const allowedFrom = 'hybrid.quickbase.com.dev';
-const localDomain = 'legacy.quickbase.com.dev';
-const currentServer = 'legacyCurrentQuickbase';
-const signinurl = 'http://testrealm.legacy.quickbase.com.dev/signin';
+const localDomain = 'quickbase.com.dev';
+const signinurl = 'http://testrealm.quickbase.com.dev/signin';
 
 server.app.set('port', process.env.PORT || 3002);
 
@@ -28,8 +32,9 @@ server.app.use(function(req, res, next) {
 server.app.route('/signin')
     .get(function(req, res) {
         const target = req.query.goto || '/';
-        console.log('\n@@@handling signin target url =' + target)
-        res.render('signin', { targetUrl: target});
+        const from = req.query.from;
+        console.log('\n@@@handling signin target url =' + target + ' from=' + from)
+        res.render('signin', { targetUrl: target, from:from});
     });
 
 
@@ -39,18 +44,32 @@ server.app.route('/sendcreds')
     .get(function(req, res) {
         //todo could validate username here
         console.log('\n@@@handling sendcreds : ');
-        var target = req.query.goto || '/';
-        console.log('got creds going to : '+ target);
+        const target = req.query.goto || '/';
+        const orig = req.get('origin')
+        const from = req.query.from || defaultRealm;
+        const cookieDomain = orig || from;
+        console.log('got creds going to : '+ target + ' orig: '+orig + ' from: '+ from + ' cookieDomain:'+ cookieDomain);
+
         // check if client sent cookie
-        console.log('\ncurrent req cookie are:' + JSON.stringify(req.cookies))
-        var cookie = req.cookies['TICKET-' + allowedFrom];
+        console.log('current req cookie are:' + JSON.stringify(req.cookies))
+        var cookie = req.cookies['TICKET-' + cookieDomain];
         if (cookie === undefined) {
             // no: set a new cookie
+            console.log('no ticket yet');
+
             var randomNumber = Math.random().toString();
-            randomNumber + randomNumber.substring(2, randomNumber.length);
-            res.cookie('TICKET-' + allowedFrom, allowedFrom + "-" + randomNumber, {maxAge: 900000, domain: baseDomain});
-            res.cookie('TICKET-' + localDomain, localDomain + "-" + randomNumber, {maxAge: 900000, domain: baseDomain});
-            //return a cookie to any req
+            res.cookie('TICKET-cur', baseDomain + "-domain_" + baseDomain + '-' + randomNumber, {maxAge: 900000, domain: baseDomain});
+            if (cookieDomain) {
+                res.cookie('TICKET-'+cookieDomain, cookieDomain + "-domain_" + cookieDomain + '-' + randomNumber, {
+                    maxAge: 900000,
+                    domain: baseDomain
+                });
+
+                //return a cookie to any req
+                if (cookieDomain.endsWith(target)) {
+                    console.log('cookieDomain does endsWith target cookieDomain =' + cookieDomain + ' target =' + target);
+                }
+            }
             console.log('cookie created successfully:' + strify(res.cookie, null, 2));
         }
         else {
@@ -65,13 +84,13 @@ server.app.route('/sendcreds')
 server.app.use(function (req, res, next) {
     // check if client sent cookie
     console.log('\n checking current req cookies :' + JSON.stringify(req.cookies) )
-    var cookie = req.cookies['TICKET-'+allowedFrom];
+    var cookie = req.cookies['TICKET-'+'cur'];
     if (cookie === undefined) {
         //redirect to quickbase login
         let vals = `hostname:${req.hostname} url:${server.fullUrl(req)} `;
         console.log('not signed in redirect to signin '+signinurl + "--- dets: " + vals);
 
-        res.redirect(signinurl+"?goto="+server.fullUrl(req));
+        res.redirect(signinurl+"?goto="+server.fullUrl(req) +'&from='+thisRealm);
     } else {
         next();
     }

@@ -6,18 +6,31 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "hotlist": "./node_modules/.bin/hotel ls",
-    "hotLegacyChrome": "./node_modules/.bin/hotel add 'node  --inspect=9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
-    "hotLegacyND": "./node_modules/.bin/hotel add 'node-debug -p 9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
-    "hotLegacy": "./node_modules/.bin/hotel add 'node --debug=9229 qb/app.js' --out dev.log --name testRealm.legacy.quickbase.com --port 3002",
-    "removeLegacy": "./node_modules/.bin/hotel rm --name testRealm.legacy.quickbase.com ",
+    "hotCurrentChrome": "./node_modules/.bin/hotel add 'node  --inspect=9229 qb/app.js' --out dev.log --name testRealm.quickbase.com --port 3002",
+    "hotCurrentND": "./node_modules/.bin/hotel add 'node-debug -p 9229 qb/app.js' --out dev.log --name testRealm.quickbase.com --port 3002",
+    "hotCurrent": "./node_modules/.bin/hotel add 'node --debug=9229 qb/app.js' --out dev.log --name testRealm.quickbase.com --port 3002",
+    "removeCurrent": "./node_modules/.bin/hotel rm --name testRealm.quickbase.com ",
 
     "hotHybridChrome": "./node_modules/.bin/hotel add 'node  --inspect=9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "hotHybridND": "./node_modules/.bin/hotel add 'node-debug -p 9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "hotHybrid": "./node_modules/.bin/hotel add 'node --debug=9228 hybrid/app.js' --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "removeHybrid": "./node_modules/.bin/hotel rm  --name testRealm.hybrid.quickbase.com ",
 
-    "removeall": "npm run removeLegacy & npm run removeHybrid",
-    "addall": "npm run hotLegacy & npm run hotHybrid"
+    "hotEvilChrome": "./node_modules/.bin/hotel add 'node  --inspect=9227 evil/app.js' --out dev.log --name www.evil.com --port 3000",
+    "hotEvilND": "./node_modules/.bin/hotel add 'node-debug -p 9227 evil/app.js' --out dev.log --name www.evil.com --port 3000",
+    "hotEvil": "./node_modules/.bin/hotel add 'node --debug=9227 evil/app.js' --out dev.log --name www.evil.com --port 3000",
+    "removeEvil": "./node_modules/.bin/hotel rm  --name www.evil.com ",
+
+    "hotEvilRealmChrome": "./node_modules/.bin/hotel add 'node  --inspect=9226 evilRealm/app.js' --out dev.log --name evilRealm.quickbase.com --port 3003",
+    "hotEvilRealmND": "./node_modules/.bin/hotel add 'node-debug -p 9226 evilRealm/app.js' --out dev.log --name evilRealm.quickbase.com --port 3003",
+    "hotEvilRealm": "./node_modules/.bin/hotel add 'node --debug=9226 evilRealm/app.js' --out dev.log --name evilRealm.quickbase.com  --port 3003",
+    "removeEvilRealm": "./node_modules/.bin/hotel rm  --name evilRealm.quickbase.com",
+
+    "hotLocalWin" : "./node_modules/.bin/hotel add ﻿https://teamquickbase.quickbase-dev.com --out vmdev.log --name teamquickbase.quickbase.com  --port 3004",
+    "removeLocalWin" : "./node_modules/.bin/hotel rm  --name teamquickbase.quickbase.com",
+
+    "removeall": "npm run removeCurrent & npm run removeHybrid & npm run removeEvil & npm run removeEvilRealm",
+    "addall": "npm run hotCurrent & npm run hotHybrid & npm run hotEvil & npm run hotEvilRealm"
   },
   "author": "Claire Martinez",
   "license": "ISC",

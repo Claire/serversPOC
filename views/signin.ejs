@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Legacy Quickbase Site</title>
+    <title>Current Quickbase Site</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="/js.cookie.js"></script>
@@ -28,7 +28,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         function getCreds() {
-            window.location.href = '/sendcreds?goto=<%=targetUrl%>';
+            window.location.href = '/sendcreds?goto=<%=targetUrl%>&from=<%=from%>';
         }
         document.getElementById("signin").onclick = getCreds;
     })

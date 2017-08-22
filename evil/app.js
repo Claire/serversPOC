@@ -1,10 +1,9 @@
 const server = require('../appCommon');
 const path = require('path');
 
-const allowedFrom = 'quickbase.com.dev';
-const thisRealm = 'testrealm';
+const allowedFrom = 'evil.dev';
 const signinurl = 'http://testrealm.quickbase.com.dev/signin';
-const thishost = 'http://testrealm.hybrid.quickbase.com.dev/signin';
+const thishost = 'http://www.evil.dev';
 
 server.app.set('port', process.env.PORT || 3001);
 
@@ -20,22 +19,6 @@ server.app.use(function(req, res, next) {
     }
 });
 
-//get the cookie
-server.app.use(function (req, res, next) {
-    // check if client sent cookie
-    let orig = req.get('origin');
-    console.log('\ncurrent req cookie are:' + JSON.stringify(req.cookies) + ' fullurl='+server.fullUrl(req))
-    var cookie = req.cookies['TICKET-'+thisRealm];
-    if (cookie === undefined) {
-        //redirect to quickbase login
-        console.log('not signed in redirect to signin '+signinurl+req.url)
-        res.redirect(signinurl+"?goto="+server.fullUrl(req)+'&from='+thisRealm);
-    } else {
-        next();
-    }
-})
-
-
 server.app.use(function(req, res, next) {
     let orig = req.get('origin');
     console.log("req=" + req.hostname);
@@ -47,11 +30,11 @@ server.app.use(function(req, res, next) {
     next();
 });
 
-server.app.get('/cattle', function(req, res) {
+server.app.get('/bad', function(req, res) {
     const data = {
-        "Cattle": [
-            "Bessie",
-            "Clarabelle"]
+        "Bad": [
+            "Evil",
+            "Mal"]
     };
     res.json(data);
 });
