@@ -26,7 +26,7 @@
     "hotEvilRealm": "./node_modules/.bin/hotel add 'node --debug=9226 evilRealm/app.js' --out dev.log --name evilRealm.quickbase.com  --port 3003",
     "removeEvilRealm": "./node_modules/.bin/hotel rm  --name evilRealm.quickbase.com",
 
-    "hotLocalWin" : "./node_modules/.bin/hotel add ﻿https://teamquickbase.quickbase-dev.com --out vmdev.log --name teamquickbase.quickbase.com  --port 3004",
+    "hotLocalWin" : "./node_modules/.bin/hotel add --change-origin﻿https://teamquickbase.quickbase-dev.com --out vmdev.log --name teamquickbase.quickbase.com  --port 3004",
     "removeLocalWin" : "./node_modules/.bin/hotel rm  --name teamquickbase.quickbase.com",
 
     "removeall": "npm run removeCurrent & npm run removeHybrid & npm run removeEvil & npm run removeEvilRealm",
