@@ -8,26 +8,31 @@
     "hotlist": "hotel ls",
     "hotCurrentChrome": "hotel add \"node  --inspect=9229 qb/app.js\" --out dev.log --name testRealm.quickbase.com --port 3002",
     "hotCurrentND": "hotel add \"node-debug -p 9229 qb/app.js\" --out dev.log --name testRealm.quickbase.com --port 3002",
-    "hotCurrenDebug": "hotel add\" node --debug=9229\" qb/app.js --out dev.log --name testRealm.quickbase.com --port 3002",
+    "hotCurrentDebug": "hotel add \"node --debug=9229\" qb/app.js --out dev.log --name testRealm.quickbase.com --port 3002",
     "hotCurrent": "hotel add \"node qb/app.js\" --out dev.log --name testRealm.quickbase.com --port 3002",
     "removeCurrent": "hotel rm --name testRealm.quickbase.com ",
-    "hotHybridChrome": "hotel add \"node  --inspect=9228 hybrid/app.js\" --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
+
+      "hotHybridChrome": "hotel add \"node  --inspect=9228 hybrid/app.js\" --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "hotHybridND": "hotel add \"node-debug -p 9228 hybrid/app.js\" --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "hotHybridDebug": "hotel add \"node --debug=9228 hybrid\\app.js\" --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "hotHybrid": "hotel add \"node hybrid/app.js\" --out dev.log --name testRealm.hybrid.quickbase.com --port 3001",
     "removeHybrid": "hotel rm  --name testRealm.hybrid.quickbase.com ",
+
     "hotEvilChrome": "hotel add \"node  --inspect=9227 evil/app.js\" --out dev.log --name www.evil.com --port 3000",
     "hotEvilND": "hotel add \"node-debug -p 9227 evil/app.js\" --out dev.log --name www.evil.com --port 3000",
     "hotEvilDebug": "hotel add \"node --debug=9227 evil/app.js\" --out dev.log --name www.evil.com --port 3000",
     "hotEvil": "hotel add \"node evil/app.js\" --out dev.log --name www.evil.com --port 3000",
     "removeEvil": "hotel rm  --name www.evil.com ",
+
     "hotEvilRealmChrome": "hotel add \"node  --inspect=9226 evilRealm/app.js\" --out dev.log --name evilRealm.quickbase.com --port 3003",
     "hotEvilRealmND": "hotel add \"node-debug -p 9226 evilRealm/app.js\" --out dev.log --name evilRealm.quickbase.com --port 3003",
     "hotEvilRealmDebug": "hotel add \"node --debug=9226 evilRealm/app.js\" --out dev.log --name evilRealm.quickbase.com  --port 3003",
     "hotEvilRealm": "hotel add \"node evilRealm/app.js\" --out dev.log --name evilRealm.quickbase.com  --port 3003",
     "removeEvilRealm": "hotel rm  --name evilRealm.quickbase.com",
-    "hotLocalWin": "hotel add --change-origin https://teamquickbase.quickbase-dev.com --out vmdev.log --name teamquickbase.quickbase.com  --port 3004",
-    "removeLocalWin": "hotel rm  --name teamquickbase.quickbase.com",
+
+    "hotLocalWin" : "hotel add --change-origin https://teamquickbase.quickbase-dev.com --out vmdev.log --name teamquickbase.quickbase.com  --port 3004",
+    "removeLocalWin" : "hotel rm  --name teamquickbase.quickbase.com",
+
     "removeall": "npm run removeCurrent & npm run removeHybrid & npm run removeEvil & npm run removeEvilRealm",
     "addall": "npm run hotCurrent & npm run hotHybrid & npm run hotEvil & npm run hotEvilRealm"
   },
@@ -41,6 +46,7 @@
     "hotel": "^0.7.6",
     "json-stringify-safe": "^5.0.1",
     "method-override": "^2.3.9",
+
     "morgan": "^1.8.2",
     "path": "^0.12.7"
   }
